@@ -1,0 +1,22 @@
+[project]
+name = "december"
+version = "0.0.1"
+description = "December — an observable AI terrarium. Causal kernel."
+requires-python = ">=3.14"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/december"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Determinism: the kernel must not depend on hash randomization.
+# Tests re-run under varied seeds explicitly; see tests/test_determinism.py
+addopts = "-q"
