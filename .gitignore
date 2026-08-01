@@ -15,3 +15,7 @@ node_modules/
 /var/
 *.db
 *.sqlite3
+
+# Nested projects with their own git remotes
+/site/
+/wega-site/
