@@ -1,8 +1,8 @@
 # December: The Living Terrarium
 
-**Status:** design draft, revised after two audit passes  
-**Date:** 2026-08-01  
-**Implementation status:** deliberately not started  
+**Status:** design revised after two audit passes; Phase 1 underway  
+**Site:** [wegalabs.com](https://www.wegalabs.com/) · [the argument, in 6 minutes](https://www.wegalabs.com/plan)  
+**Implementation status:** the determinism spine is built and tested ([`src/`](src/), [`tests/`](tests/)). No ecology, no residents, no cognition — nothing is alive yet.  
 **Audit status:** Gate 0 remains open. See the [first audit](AUDIT-FINDINGS.md) and [independent pass 2](AUDIT-FINDINGS-PASS-2.md). The second pass accepted the engineering premise. The unsafe public human-participant flow has since been removed; versioning, owner decisions, preregistration, parameter provenance, and scope decisions remain open.
 
 December is a plan for an always-running, observable settlement whose inhabitants can survive, form relationships, build, govern, trade, disagree, elect leaders, split into factions, fight, migrate, reproduce, and die. The ambition is not a scripted AI soap opera. It is a small causal world capable of producing histories that surprise us for reasons we can inspect.
@@ -21,7 +21,9 @@ Reproducibility has three meanings: portable reconstruction from recorded events
 
 ## Start here
 
-**[OVERVIEW.md](OVERVIEW.md)** — a 13-minute introduction in prose. What December is, the handful of ideas that actually matter, and what it refuses to claim. Read this before the wiki.
+**[OVERVIEW.md](OVERVIEW.md)** — an 11-minute introduction in prose. What December is, the handful of ideas that actually matter, and what it refuses to claim. Read this before the wiki. A shorter version is on the web at [wegalabs.com/plan](https://www.wegalabs.com/plan).
+
+**The code** is in [`src/december/`](src/december/). Phase 1 begins with the parts that cannot be retrofitted — integer-valued world state, hash-chained events, reproducible RNG streams, and exact replay — running on a deliberately trivial world so the foundation is tested before anything is built on it. `pytest` runs the determinism suite from [`wiki/14`](wiki/14-determinism-replay-and-state-integrity.md) §D9.
 
 The documents below are a specification, not an introduction: roughly 48,000 words organised by subsystem, with the reasoning and sources behind every choice. They are meant to be audited against and referred to, not read front to back.
 
