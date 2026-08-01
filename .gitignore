@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node (nested site projects have their own repos)
+node_modules/
+
+# Local world data
+/var/
+*.db
+*.sqlite3
