@@ -19,6 +19,12 @@ This is an **observable AI terrarium**, not a claim that we have recreated human
 
 Reproducibility has three meanings: portable reconstruction from recorded events, deterministic re-execution of the kernel within its declared numeric environment, and fresh counterfactual simulation. Only the first is an event-log replay; a branch with new model responses is a new experiment. See [determinism and replay](wiki/14-determinism-replay-and-state-integrity.md).
 
+## Start here
+
+**[OVERVIEW.md](OVERVIEW.md)** — a 13-minute introduction in prose. What December is, the handful of ideas that actually matter, and what it refuses to claim. Read this before the wiki.
+
+The documents below are a specification, not an introduction: roughly 48,000 words organised by subsystem, with the reasoning and sources behind every choice. They are meant to be audited against and referred to, not read front to back.
+
 ## Reading order
 
 1. [Vision and north star](wiki/00-vision-and-north-star.md)
