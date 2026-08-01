@@ -21,6 +21,8 @@ Reproducibility has three meanings: portable reconstruction from recorded events
 
 ## Start here
 
+**[DECEMBER-BOOK.html](DECEMBER-BOOK.html)** — the entire product, research, architecture, ADR, and audit corpus in one searchable, self-contained review edition. It includes per-chapter notes, read tracking, and Markdown feedback export.
+
 **[OVERVIEW.md](OVERVIEW.md)** — an 11-minute introduction in prose. What December is, the handful of ideas that actually matter, and what it refuses to claim. Read this before the wiki. A shorter version is on the web at [wegalabs.com/plan](https://www.wegalabs.com/plan).
 
 **The code** is in [`src/december/`](src/december/). Phase 1 begins with the parts that cannot be retrofitted — integer-valued world state, hash-chained events, reproducible RNG streams, and exact replay — running on a deliberately trivial world so the foundation is tested before anything is built on it. `pytest` runs the determinism suite from [`wiki/14`](wiki/14-determinism-replay-and-state-integrity.md) §D9.
