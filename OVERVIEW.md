@@ -2,7 +2,13 @@
 
 **A world that keeps living.**
 
-*A 13-minute introduction. The full specification is in [`wiki/`](wiki/); this is the version you read first.*
+*An 11-minute introduction. The full specification is in [`wiki/`](wiki/); this is the version you read first. A shorter version is on the web at [wegalabs.com/plan](https://www.wegalabs.com/plan).*
+
+---
+
+**In one paragraph.** December is a small settlement of artificial residents that keeps running whether or not anyone is watching. Each resident is played by a language model that chooses what to attempt; a simulation decides what is actually possible, so nobody invents food, occupies two places at once, or knows something they were never told. Every event is recorded with its cause, so any outcome can be traced back through the decisions, observations, and chance that produced it. Nothing is running yet — the design is finished and audited, the foundation is built, and no resident exists.
+
+Here is why it is built that way.
 
 ---
 
