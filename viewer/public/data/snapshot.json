@@ -1,0 +1,66 @@
+{
+  "branch_id": "canonical",
+  "contract_version": "december.observer.v1",
+  "coordinate_system": {
+    "millimetres_per_tile": 1000,
+    "unit": "millimetre"
+  },
+  "head_event_hash": "fecf6a12d316657b8dcdcbb147472ceb2bcb3af583068814516d3f122ec3282d",
+  "scenario_id": "founding-valley-day-one",
+  "snapshot_kind": "replay_start",
+  "state": {
+    "containers": [
+      {
+        "container_id": "granary",
+        "grain_grams": 286000
+      },
+      {
+        "container_id": "raised_seed_store",
+        "grain_grams": 74000
+      }
+    ],
+    "ledger": {
+      "created_grain_grams": 360000,
+      "live_grain_grams": 360000,
+      "spoiled_grain_grams": 0
+    },
+    "residents": [
+      {
+        "activity": "Checking the fishing nets",
+        "name": "Iven",
+        "resident_id": "iven",
+        "role": "Fisher · House Reed",
+        "x_millimetres": 17000,
+        "y_millimetres": 9000
+      },
+      {
+        "activity": "Inspecting the lower barley plot",
+        "name": "Mara",
+        "resident_id": "mara",
+        "role": "Grower · House Alder",
+        "x_millimetres": 23000,
+        "y_millimetres": 14000
+      },
+      {
+        "activity": "Checking the seed-grain ledger",
+        "name": "Sera",
+        "resident_id": "sera",
+        "role": "Storekeeper · House Flint",
+        "x_millimetres": 29000,
+        "y_millimetres": 8000
+      },
+      {
+        "activity": "Selecting timber for the footbridge",
+        "name": "Toma",
+        "resident_id": "toma",
+        "role": "Carpenter · House Birch",
+        "x_millimetres": 9000,
+        "y_millimetres": 20000
+      }
+    ],
+    "sim_time": 1402800
+  },
+  "state_hash": "2a9c564fa7633e23c5369ec784356fa6b284ca70fe0e5ac6ae1f1ff70082d1c3",
+  "through_sequence": 6,
+  "world_id": "world:december"
+}
