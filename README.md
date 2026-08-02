@@ -2,7 +2,7 @@
 
 **Status:** design revised after two audit passes; Phase 1 underway  
 **Site:** [wegalabs.com](https://www.wegalabs.com/) · [the argument, in 6 minutes](https://www.wegalabs.com/plan)  
-**Implementation status:** the determinism spine is built and tested ([`src/`](src/), [`tests/`](tests/)). No ecology, no residents, no cognition — nothing is alive yet.  
+**Implementation status:** the determinism spine and `december.observer.v1` replay contract are built and tested ([`src/`](src/), [`tests/`](tests/)). A four-body scripted Day One now drives the [visual preview](https://www.wegalabs.com/world). No ecology, cognition, or autonomous residents exist yet.
 **Audit status:** Gate 0 remains open. See the [first audit](AUDIT-FINDINGS.md) and [independent pass 2](AUDIT-FINDINGS-PASS-2.md). The second pass accepted the engineering premise. The unsafe public human-participant flow has since been removed; versioning, owner decisions, preregistration, parameter provenance, and scope decisions remain open.
 
 December is a plan for an always-running, observable settlement whose inhabitants can survive, form relationships, build, govern, trade, disagree, elect leaders, split into factions, fight, migrate, reproduce, and die. The ambition is not a scripted AI soap opera. It is a small causal world capable of producing histories that surprise us for reasons we can inspect.
@@ -51,6 +51,7 @@ The documents below are a specification, not an introduction: roughly 48,000 wor
 18. [Initial conditions and authorship](wiki/17-initial-conditions-and-authorship.md)
 19. [Lab charter and research program](wiki/18-lab-charter-and-research-program.md)
 20. [Experiment card template and R0 continuity protocol](wiki/19-experiment-card-template-and-r0-protocol.md)
+21. [Open-source adoption and boundaries](wiki/20-open-source-adoption-and-boundaries.md)
 
 Documents 15–18 were added by the first audit pass. Documents 19–20 and ADR-009 were added by pass 2 to connect the terrarium to a falsifiable lab program, define the first experiment, and prevent operational identity from being confused with consciousness or human survival.
 

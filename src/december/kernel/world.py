@@ -1,13 +1,13 @@
-"""A deliberately trivial world: grain in containers.
+"""A deliberately small world: grain containers and scripted residents.
 
 This is the walking skeleton. It has no ecology, no people, and no cognition.
 Its only job is to exercise the parts of the architecture that cannot be
 retrofitted later — integer state, the command pipeline, hash-chained events,
 named RNG streams, conservation with a declared sink, and snapshot/replay.
 
-Everything real comes after this proves out. Building weather and crops first
-would be building on an unverified spine, and it is exactly where the
-integer-versus-float decision bites hardest.
+The residents in this module are bodies, not minds. Their typed movement and
+activity events exist so the observer can consume honest kernel output before
+cognition is introduced. Everything ecological and cognitive comes later.
 """
 
 from __future__ import annotations
@@ -32,6 +32,18 @@ class PreconditionFailed(ValueError):
 
 
 @dataclass(slots=True)
+class Resident:
+    """The minimum authoritative body state needed by the first observer."""
+
+    resident_id: str
+    name: str
+    role: str
+    x_millimetres: int
+    y_millimetres: int
+    activity: str
+
+
+@dataclass(slots=True)
 class World:
     """Authoritative state.
 
@@ -41,6 +53,7 @@ class World:
     """
 
     containers: dict[str, int] = field(default_factory=dict)
+    residents: dict[str, Resident] = field(default_factory=dict)
     spoiled_total: int = 0
     created_total: int = 0
     sim_time: int = 0
@@ -66,6 +79,17 @@ class World:
         """
         payload = {
             "containers": sorted(self.containers.items()),
+            "residents": [
+                {
+                    "resident_id": resident.resident_id,
+                    "name": resident.name,
+                    "role": resident.role,
+                    "x_millimetres": resident.x_millimetres,
+                    "y_millimetres": resident.y_millimetres,
+                    "activity": resident.activity,
+                }
+                for _, resident in sorted(self.residents.items())
+            ],
             "spoiled_total": self.spoiled_total,
             "created_total": self.created_total,
             "sim_time": self.sim_time,
@@ -107,6 +131,22 @@ class Kernel:
             case "grain.spoiled.v1":
                 self.world.containers[p["container"]] -= p["grams"]
                 self.world.spoiled_total += p["grams"]
+            case "resident.created.v1":
+                resident_id = p["resident_id"]
+                self.world.residents[resident_id] = Resident(
+                    resident_id=resident_id,
+                    name=p["name"],
+                    role=p["role"],
+                    x_millimetres=p["x_millimetres"],
+                    y_millimetres=p["y_millimetres"],
+                    activity=p["activity"],
+                )
+            case "resident.moved.v1":
+                resident = self.world.residents[p["resident_id"]]
+                resident.x_millimetres = p["x_millimetres"]
+                resident.y_millimetres = p["y_millimetres"]
+            case "resident.activity_changed.v1":
+                self.world.residents[p["resident_id"]].activity = p["activity"]
             case "world.time_advanced.v1":
                 self.world.sim_time = p["sim_time"]
             case _:
@@ -154,6 +194,75 @@ class Kernel:
             entity_ids=(src, dst),
         )
 
+    def create_resident(
+        self,
+        resident_id: str,
+        name: str,
+        role: str,
+        x_millimetres: int,
+        y_millimetres: int,
+        activity: str,
+    ) -> Event:
+        """Create a body. This does not create a cognitive agent."""
+        if not resident_id or not name or not role or not activity:
+            raise PreconditionFailed("resident fields must be non-empty")
+        if resident_id in self.world.residents:
+            raise PreconditionFailed("resident already exists")
+        if x_millimetres < 0 or y_millimetres < 0:
+            raise PreconditionFailed("resident position must be non-negative")
+        return self._emit(
+            "resident.created.v1",
+            {
+                "resident_id": resident_id,
+                "name": name,
+                "role": role,
+                "x_millimetres": x_millimetres,
+                "y_millimetres": y_millimetres,
+                "activity": activity,
+            },
+            actor_ids=(resident_id,),
+            entity_ids=(resident_id,),
+        )
+
+    def move_resident(self, resident_id: str, x_millimetres: int, y_millimetres: int) -> Event:
+        """Record an accepted body movement to a position in the world."""
+        if resident_id not in self.world.residents:
+            raise PreconditionFailed("resident does not exist")
+        if x_millimetres < 0 or y_millimetres < 0:
+            raise PreconditionFailed("resident position must be non-negative")
+        return self._emit(
+            "resident.moved.v1",
+            {
+                "resident_id": resident_id,
+                "x_millimetres": x_millimetres,
+                "y_millimetres": y_millimetres,
+            },
+            actor_ids=(resident_id,),
+            entity_ids=(resident_id,),
+        )
+
+    def set_activity(self, resident_id: str, activity: str) -> Event:
+        """Record a typed, externally chosen activity for the scripted body."""
+        if resident_id not in self.world.residents:
+            raise PreconditionFailed("resident does not exist")
+        if not activity:
+            raise PreconditionFailed("activity must be non-empty")
+        return self._emit(
+            "resident.activity_changed.v1",
+            {"resident_id": resident_id, "activity": activity},
+            actor_ids=(resident_id,),
+            entity_ids=(resident_id,),
+        )
+
+    def advance_time(self, seconds: int) -> Event:
+        """Advance simulated time without consulting the wall clock."""
+        if seconds <= 0:
+            raise PreconditionFailed("seconds must be positive")
+        return self._emit(
+            "world.time_advanced.v1",
+            {"sim_time": self.world.sim_time + seconds},
+        )
+
     def advance_day(self, spoil_rate_ppm: int) -> list[Event]:
         """Advance one day, applying stochastic spoilage to each container.
 
@@ -190,12 +299,7 @@ class Kernel:
                     ),
                 )
             )
-        events.append(
-            self._emit(
-                "world.time_advanced.v1",
-                {"sim_time": self.world.sim_time + 86_400},
-            )
-        )
+        events.append(self.advance_time(86_400))
         return events
 
     # -- replay ---------------------------------------------------------
