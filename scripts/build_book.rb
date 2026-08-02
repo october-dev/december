@@ -98,7 +98,15 @@ docs.each do |doc|
     path, fragment = href.split("#", 2)
     resolved = Pathname.new(doc[:path]).dirname.join(path).cleanpath.to_s
     target = path_map[resolved] || path_map["#{resolved}/"]
-    replacement = target ? "##{target[:id]}#{fragment && !fragment.empty? ? "-#{fragment}" : ""}" : href
+    if target
+      replacement = "##{target[:id]}#{fragment && !fragment.empty? ? "-#{fragment}" : ""}"
+    elsif resolved == "DECEMBER-BOOK.html"
+      replacement = "#top"
+    else
+      github_kind = ROOT.join(resolved).directory? || path.end_with?("/") ? "tree" : "blob"
+      replacement = "https://github.com/october-dev/december/#{github_kind}/main/#{resolved}"
+      replacement += "##{fragment}" if fragment && !fragment.empty?
+    end
     %(href="#{esc(replacement)}")
   end
   doc[:html] = html
