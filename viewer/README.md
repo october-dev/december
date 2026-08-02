@@ -1,7 +1,7 @@
 # December observer
 
 The read-only browser adapter for December's canonical kernel. It displays the
-`december.observer.v1` snapshot and JSONL event stream in `public/data/` and has
+`december.observer.v2` snapshot and JSONL event stream in `public/data/` and has
 no write path back to the simulation.
 
 ```sh

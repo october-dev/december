@@ -108,7 +108,10 @@ def test_conservation_under_random_command_sequences(tmp_path):
                     k.transfer(src, dst, rnd.randint(1, available))
             k.world.check_conservation()  # raises on violation
 
-        assert k.world.total_live() + k.world.spoiled_total == k.world.created_total
+        assert (
+            k.world.total_live() + k.world.spoiled_total + k.world.consumed_total
+            == k.world.created_total
+        )
 
 
 def test_no_negative_stocks(tmp_path):

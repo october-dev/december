@@ -15,7 +15,7 @@ from typing import Any, Iterable
 from december.kernel.events import DIGEST_ALGORITHM, DIGEST_VERSION, Event
 from december.kernel.world import World
 
-CONTRACT_VERSION = "december.observer.v1"
+CONTRACT_VERSION = "december.observer.v2"
 
 
 def _world_state(world: World) -> dict[str, Any]:
@@ -25,6 +25,10 @@ def _world_state(world: World) -> dict[str, Any]:
             {"container_id": container_id, "grain_grams": grams}
             for container_id, grams in sorted(world.containers.items())
         ],
+        "water_containers": [
+            {"container_id": container_id, "water_millilitres": millilitres}
+            for container_id, millilitres in sorted(world.water_containers.items())
+        ],
         "residents": [
             {
                 "resident_id": resident.resident_id,
@@ -33,13 +37,21 @@ def _world_state(world: World) -> dict[str, Any]:
                 "x_millimetres": resident.x_millimetres,
                 "y_millimetres": resident.y_millimetres,
                 "activity": resident.activity,
+                "energy_kilojoules": resident.energy_kilojoules,
+                "hydration_millilitres": resident.hydration_millilitres,
+                "health_ppm": resident.health_ppm,
+                "alive": resident.alive,
             }
             for _, resident in sorted(world.residents.items())
         ],
         "ledger": {
             "created_grain_grams": world.created_total,
             "spoiled_grain_grams": world.spoiled_total,
+            "consumed_grain_grams": world.consumed_total,
             "live_grain_grams": world.total_live(),
+            "created_water_millilitres": world.water_created_total,
+            "consumed_water_millilitres": world.water_consumed_total,
+            "live_water_millilitres": sum(world.water_containers.values()),
         },
     }
 

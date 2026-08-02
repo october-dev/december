@@ -22,8 +22,13 @@ type SnapshotResident = {
   x_millimetres: number;
   y_millimetres: number;
   activity: string;
+  energy_kilojoules: number;
+  hydration_millilitres: number;
+  health_ppm: number;
+  alive: boolean;
 };
 type SnapshotContainer = { container_id: string; grain_grams: number };
+type SnapshotWaterContainer = { container_id: string; water_millilitres: number };
 type Snapshot = {
   contract_version: string;
   scenario_id: string;
@@ -33,6 +38,7 @@ type Snapshot = {
   state: {
     sim_time: number;
     containers: SnapshotContainer[];
+    water_containers: SnapshotWaterContainer[];
     residents: SnapshotResident[];
     ledger: { live_grain_grams: number; spoiled_grain_grams: number };
   };
@@ -87,7 +93,7 @@ async function loadReplay(): Promise<Replay> {
   const snapshot = await snapshotResponse.json() as Snapshot;
   const eventsText = await eventsResponse.text();
   const events = eventsText.trim().split('\n').filter(Boolean).map((line) => JSON.parse(line) as ReplayEvent);
-  if (manifest.contract_version !== 'december.observer.v1' || snapshot.contract_version !== manifest.contract_version) {
+  if (manifest.contract_version !== 'december.observer.v2' || snapshot.contract_version !== manifest.contract_version) {
     throw new Error(`Unsupported observer contract: ${manifest.contract_version}`);
   }
   if (events.length !== manifest.event_count) throw new Error('Replay manifest event count mismatch.');
@@ -104,6 +110,7 @@ function projectionAt(replay: Replay, simTime: number) {
   const millimetresPerTile = replay.snapshot.coordinate_system.millimetres_per_tile;
   const activeEvents = replay.events.filter((event) => effectiveEventTime(event) <= simTime);
   const containers = new Map(replay.snapshot.state.containers.map((item) => [item.container_id, item.grain_grams]));
+  const waterContainers = new Map(replay.snapshot.state.water_containers.map((item) => [item.container_id, item.water_millilitres]));
 
   for (const event of activeEvents) {
     if (event.event_type === 'grain.transferred.v1') {
@@ -112,6 +119,17 @@ function projectionAt(replay: Replay, simTime: number) {
       const grams = Number(event.payload.grams);
       containers.set(source, (containers.get(source) ?? 0) - grams);
       containers.set(destination, (containers.get(destination) ?? 0) + grams);
+    }
+    if (event.event_type === 'grain.consumed.v1') {
+      const container = String(event.payload.container);
+      containers.set(container, (containers.get(container) ?? 0) - Number(event.payload.grams));
+    }
+    if (event.event_type === 'water.consumed.v1') {
+      const container = String(event.payload.container);
+      waterContainers.set(
+        container,
+        (waterContainers.get(container) ?? 0) - Number(event.payload.millilitres),
+      );
     }
   }
 
@@ -142,9 +160,31 @@ function projectionAt(replay: Replay, simTime: number) {
     const activity = activityEvents.length
       ? String(activityEvents[activityEvents.length - 1].payload.activity)
       : snapshotResident.activity;
+    let energy = snapshotResident.energy_kilojoules;
+    let hydration = snapshotResident.hydration_millilitres;
+    let health = snapshotResident.health_ppm;
+    let alive = snapshotResident.alive;
+    for (const event of activeEvents) {
+      if (event.payload.resident_id !== snapshotResident.resident_id) continue;
+      if (event.event_type === 'resident.metabolized.v1') {
+        energy -= Number(event.payload.energy_spent_kilojoules);
+        hydration -= Number(event.payload.water_spent_millilitres);
+        health -= Number(event.payload.health_lost_ppm);
+      } else if (event.event_type === 'grain.consumed.v1') {
+        energy += Number(event.payload.energy_absorbed_kilojoules);
+      } else if (event.event_type === 'water.consumed.v1') {
+        hydration += Number(event.payload.water_absorbed_millilitres);
+      } else if (event.event_type === 'resident.died.v1') {
+        alive = false;
+      }
+    }
     return {
       ...snapshotResident,
       activity,
+      energy_kilojoules: energy,
+      hydration_millilitres: hydration,
+      health_ppm: health,
+      alive,
       color: colors[index % colors.length],
       character: characters[(index * 2) % characters.length],
       point: {
@@ -154,7 +194,7 @@ function projectionAt(replay: Replay, simTime: number) {
       direction: { x: next.x - previous.x, y: next.y - previous.y },
     };
   });
-  return { residents, containers, activeEvents };
+  return { residents, containers, waterContainers, activeEvents };
 }
 
 function orientation(dx: number, dy: number) {
@@ -186,6 +226,21 @@ function eventPresentation(event: ReplayEvent, residents: SnapshotResident[]) {
   }
   if (event.event_type === 'grain.transferred.v1') {
     return { kind: 'STOCK', text: `${formatMass(Number(event.payload.grams))} moved from ${event.payload.from} to ${event.payload.to}.` };
+  }
+  if (event.event_type === 'resident.metabolized.v1') {
+    return {
+      kind: 'BODY',
+      text: `${resident?.name ?? 'A resident'} spent ${event.payload.energy_spent_kilojoules} kJ and ${event.payload.water_spent_millilitres} ml.`,
+    };
+  }
+  if (event.event_type === 'grain.consumed.v1') {
+    return { kind: 'EAT', text: `${resident?.name ?? 'A resident'} ate ${event.payload.grams} g from ${event.payload.container}.` };
+  }
+  if (event.event_type === 'water.consumed.v1') {
+    return { kind: 'DRINK', text: `${resident?.name ?? 'A resident'} drank ${event.payload.millilitres} ml.` };
+  }
+  if (event.event_type === 'resident.died.v1') {
+    return { kind: 'DEATH', text: `${resident?.name ?? 'A resident'} died from ${event.payload.cause}.` };
   }
   return null;
 }
@@ -261,7 +316,7 @@ function DecemberPreview() {
     }));
     if (stageRef.current) observer.observe(stageRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [replay]);
 
   useEffect(() => {
     let frame = 0;
@@ -296,11 +351,13 @@ function DecemberPreview() {
     .reverse();
   const granary = timeline.containers.get('granary') ?? 0;
   const seedStore = timeline.containers.get('raised_seed_store') ?? 0;
+  const cistern = timeline.waterContainers.get('cistern') ?? 0;
+  const living = timeline.residents.filter((resident) => resident.alive).length;
   const resources = [
     { label: 'Granary', value: formatMass(granary), delta: 'canonical stock' },
     { label: 'Seed store', value: formatMass(seedStore), delta: 'canonical stock' },
-    { label: 'Population', value: String(timeline.residents.length), delta: 'scripted bodies' },
-    { label: 'Event chain', value: String(replay.manifest.event_count), delta: 'hash-linked events' },
+    { label: 'Cistern', value: `${(cistern / 1_000).toFixed(1)} L`, delta: 'canonical water' },
+    { label: 'Population', value: `${living} / ${timeline.residents.length}`, delta: 'living bodies' },
   ];
 
   return (
@@ -326,7 +383,7 @@ function DecemberPreview() {
         </div>
 
         <aside className="observer-panel">
-          <section className="fixture-note"><span>KERNEL-DRIVEN REPLAY</span><p>Every movement, task, stock, timestamp, and event below was exported by December’s deterministic Python kernel. Actions are scripted; cognition and ecology are not built yet.</p></section>
+          <section className="fixture-note"><span>KERNEL-DRIVEN BODY LOOP</span><p>Movement, metabolism, food, water, health, stocks, and time come from December’s deterministic kernel. Actions are scripted; cognition and ecology are not built yet.</p></section>
           <section>
             <div className="panel-heading"><span>Residents in view</span><b>{timeline.residents.length} / {timeline.residents.length}</b></div>
             <div className="resident-list">
@@ -339,6 +396,11 @@ function DecemberPreview() {
               ))}
             </div>
             <div className="selected-task"><span>Canonical activity</span><b>{selectedResident.activity}</b><small>resident.activity_changed.v1</small></div>
+            <div className="body-vitals">
+              <div><span>Energy</span><b>{selectedResident.energy_kilojoules.toLocaleString()} kJ</b><i><em style={{ width: `${Math.min(100, selectedResident.energy_kilojoules / 120)}%` }} /></i></div>
+              <div><span>Hydration</span><b>{selectedResident.hydration_millilitres.toLocaleString()} ml</b><i><em style={{ width: `${Math.min(100, selectedResident.hydration_millilitres / 40)}%` }} /></i></div>
+              <div><span>Health</span><b>{(selectedResident.health_ppm / 10_000).toFixed(1)}%</b><i><em style={{ width: `${selectedResident.health_ppm / 10_000}%` }} /></i></div>
+            </div>
           </section>
           <section>
             <div className="panel-heading"><span>World state</span><b>state {replay.snapshot.state_hash.slice(0, 8)}</b></div>

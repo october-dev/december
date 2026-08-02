@@ -45,8 +45,24 @@ export default PixiComponent('Viewport', {
     return viewport;
   },
   applyProps(viewport, oldProps: any, newProps: any) {
+    if (
+      oldProps.screenWidth !== newProps.screenWidth ||
+      oldProps.screenHeight !== newProps.screenHeight ||
+      oldProps.worldWidth !== newProps.worldWidth ||
+      oldProps.worldHeight !== newProps.worldHeight
+    ) {
+      viewport.resize(
+        newProps.screenWidth,
+        newProps.screenHeight,
+        newProps.worldWidth,
+        newProps.worldHeight,
+      );
+    }
     Object.keys(newProps).forEach((p) => {
-      if (p !== 'app' && p !== 'viewportRef' && p !== 'children' && oldProps[p] !== newProps[p]) {
+      if (
+        !['app', 'viewportRef', 'children', 'screenWidth', 'screenHeight', 'worldWidth', 'worldHeight'].includes(p) &&
+        oldProps[p] !== newProps[p]
+      ) {
         // @ts-expect-error Ignoring TypeScript here
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         viewport[p] = newProps[p];

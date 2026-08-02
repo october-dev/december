@@ -1,6 +1,6 @@
 [project]
 name = "december"
-version = "0.0.1"
+version = "0.0.2"
 description = "December — an observable AI terrarium. Causal kernel."
 requires-python = ">=3.14"
 dependencies = []

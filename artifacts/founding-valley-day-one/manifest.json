@@ -1,18 +1,18 @@
 {
   "branch_id": "canonical",
-  "contract_version": "december.observer.v1",
+  "contract_version": "december.observer.v2",
   "digest": {
     "algorithm": "blake2b-256",
     "version": 1
   },
-  "event_count": 21,
+  "event_count": 31,
   "events": "events.jsonl",
-  "final_event_hash": "4cdd064c81d9834d2d7141a7c9ca714afb8a23f744f68d6bc2c5e27efbc0baf6",
-  "final_state_hash": "f1592f69c1bb468de4def5dd6aa0e4d2adc0eb80220ffbb01f743211dffb1068",
-  "first_event_sequence": 7,
-  "last_event_sequence": 27,
+  "final_event_hash": "5d841dd20502b0272e1dfcecedf7187bcbbcd7cb51ca38062b08ff46ac5a859a",
+  "final_state_hash": "06aacbd8b1a51bb4712bc9e02d81bc5579844858cd16ee8816e30c3a9101006e",
+  "first_event_sequence": 8,
+  "last_event_sequence": 38,
   "scenario_id": "founding-valley-day-one",
   "snapshot": "snapshot.json",
-  "snapshot_through_sequence": 6,
+  "snapshot_through_sequence": 7,
   "world_id": "world:december"
 }

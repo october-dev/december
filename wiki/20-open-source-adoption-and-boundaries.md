@@ -56,7 +56,7 @@ December Python kernel
         ↓
 canonical binary event log + state hashes
         ↓
-december.observer.v1
+december.observer.v2
 snapshot.json + events.jsonl + manifest.json
         ↓
 read-only AI Town-derived PixiJS viewer
@@ -64,7 +64,7 @@ read-only AI Town-derived PixiJS viewer
 
 The observer contract is deterministic: exporting identical history twice produces byte-identical files. A snapshot declares its sequence fence and event-chain head; the JSONL stream must begin at the next sequence and continue that hash. The browser validates the contract version and event count before presenting it.
 
-This proves the truth path, not agency. Four resident bodies, grain stocks, time, movement, and activities are canonical. Their Day One commands are scripted. There is still no ecology, private perception, memory, model call, deliberation, or autonomous action selection.
+This proves the truth path, not agency. Four resident bodies, grain and water stocks, metabolism, health, time, movement, and activities are canonical. Their commands are scripted. There is still no ecology, private perception, memory, model call, deliberation, or autonomous action selection.
 
 ## Adoption sequence
 

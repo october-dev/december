@@ -45,6 +45,13 @@ button { font: inherit; }
 .selected-task { margin-top: 9px; padding: 11px; border-left: 2px solid #c0a46e; background: #202018; }
 .selected-task span, .selected-task small { display: block; color: #727262; font-size: 8px; text-transform: uppercase; }
 .selected-task b { display: block; margin: 7px 0; color: #d4cfb7; font: 11px/1.45 VCR, monospace; }
+.body-vitals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 9px; background: #37382c; border: 1px solid #37382c; }
+.body-vitals div { padding: 9px; background: #1d1e17; }
+.body-vitals span, .body-vitals b { display: block; }
+.body-vitals span { color: #727262; font-size: 7px; text-transform: uppercase; }
+.body-vitals b { margin: 6px 0; color: #d4cfb7; font-size: 8px; white-space: nowrap; }
+.body-vitals i { display: block; height: 3px; overflow: hidden; background: #35362b; }
+.body-vitals em { display: block; height: 100%; background: #c0a46e; }
 .resource-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #37382c; }
 .resource-grid div { min-height: 82px; padding: 11px; border-right: 1px solid #37382c; border-bottom: 1px solid #37382c; }
 .resource-grid div:nth-child(even) { border-right: 0; }

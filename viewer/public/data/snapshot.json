@@ -1,11 +1,11 @@
 {
   "branch_id": "canonical",
-  "contract_version": "december.observer.v1",
+  "contract_version": "december.observer.v2",
   "coordinate_system": {
     "millimetres_per_tile": 1000,
     "unit": "millimetre"
   },
-  "head_event_hash": "fecf6a12d316657b8dcdcbb147472ceb2bcb3af583068814516d3f122ec3282d",
+  "head_event_hash": "aba3173c2329f25bd4303afef1966c5368a16d188401b5df9ea25f067660cf39",
   "scenario_id": "founding-valley-day-one",
   "snapshot_kind": "replay_start",
   "state": {
@@ -20,13 +20,21 @@
       }
     ],
     "ledger": {
+      "consumed_grain_grams": 0,
+      "consumed_water_millilitres": 0,
       "created_grain_grams": 360000,
+      "created_water_millilitres": 120000,
       "live_grain_grams": 360000,
+      "live_water_millilitres": 120000,
       "spoiled_grain_grams": 0
     },
     "residents": [
       {
         "activity": "Checking the fishing nets",
+        "alive": true,
+        "energy_kilojoules": 6400,
+        "health_ppm": 1000000,
+        "hydration_millilitres": 2100,
         "name": "Iven",
         "resident_id": "iven",
         "role": "Fisher · House Reed",
@@ -35,6 +43,10 @@
       },
       {
         "activity": "Inspecting the lower barley plot",
+        "alive": true,
+        "energy_kilojoules": 6800,
+        "health_ppm": 1000000,
+        "hydration_millilitres": 2400,
         "name": "Mara",
         "resident_id": "mara",
         "role": "Grower · House Alder",
@@ -43,6 +55,10 @@
       },
       {
         "activity": "Checking the seed-grain ledger",
+        "alive": true,
+        "energy_kilojoules": 7200,
+        "health_ppm": 1000000,
+        "hydration_millilitres": 2600,
         "name": "Sera",
         "resident_id": "sera",
         "role": "Storekeeper · House Flint",
@@ -51,6 +67,10 @@
       },
       {
         "activity": "Selecting timber for the footbridge",
+        "alive": true,
+        "energy_kilojoules": 5900,
+        "health_ppm": 1000000,
+        "hydration_millilitres": 1900,
         "name": "Toma",
         "resident_id": "toma",
         "role": "Carpenter · House Birch",
@@ -58,9 +78,15 @@
         "y_millimetres": 20000
       }
     ],
-    "sim_time": 1402800
+    "sim_time": 1402800,
+    "water_containers": [
+      {
+        "container_id": "cistern",
+        "water_millilitres": 120000
+      }
+    ]
   },
-  "state_hash": "2a9c564fa7633e23c5369ec784356fa6b284ca70fe0e5ac6ae1f1ff70082d1c3",
-  "through_sequence": 6,
+  "state_hash": "6e0d788dd7d3681888a88b289a65b89f3eefa1bddec0f351c2410c2ad6b72829",
+  "through_sequence": 7,
   "world_id": "world:december"
 }
