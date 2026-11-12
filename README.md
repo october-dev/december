@@ -1,4 +1,26 @@
-# December: The Living Terrarium
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/header/logo-dark.svg">
+    <img src="assets/header/logo-light.svg" alt="december" width="560">
+  </picture>
+  <br>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/header/tagline-dark.svg">
+    <img src="assets/header/tagline-light.svg" alt="A living terrarium for synthetic agency." width="520">
+  </picture>
+</div>
+
+---
+
+<p>
+  <a href="https://www.wegalabs.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/header/button-site-dark.svg"><img src="assets/header/button-site-light.svg" alt="Website" height="40" align="top"></picture></a>
+  <a href="#start-here"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/header/button-start-dark.svg"><img src="assets/header/button-start-light.svg" alt="Start here" height="40" align="top"></picture></a>
+  <a href="https://www.wegalabs.com/world"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/header/button-world-dark.svg"><img src="assets/header/button-world-light.svg" alt="See the world" height="40" align="top"></picture></a>
+  <a href="AUDIT-FINDINGS-PASS-2.md"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/header/button-audits-dark.svg"><img src="assets/header/button-audits-light.svg" alt="Audits" height="40" align="top"></picture></a>
+  <a href="https://www.wegalabs.com/world"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/header/callout-dark.svg"><img src="assets/header/callout-light.svg" alt="Phase 1: four bodies that eat, drink and can die." height="40" align="top"></picture></a>
+</p>
+
+---
 
 **Status:** design revised after two audit passes; Phase 1 underway  
 **Site:** [wegalabs.com](https://www.wegalabs.com/) · [the argument, in 6 minutes](https://www.wegalabs.com/plan)  

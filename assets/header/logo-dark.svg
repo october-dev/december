@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="731" height="140" viewBox="0 0 731 140" role="img" aria-label="december">
+  <style>
+    .walker { animation: walk 4s steps(4) infinite alternate; }
+    @keyframes walk { from { transform: translateX(0); } to { transform: translateX(30px); } }
+    .sun { animation: glow 3s ease-in-out infinite; }
+    @keyframes glow { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g shape-rendering="crispEdges">
+    <rect x="50" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="60" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="70" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="80" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="90" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="100" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="110" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="120" y="15" width="10" height="10" fill="#312E81"/>
+    <rect x="40" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="50" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="60" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="70" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="80" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="90" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="100" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="110" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="120" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="130" y="25" width="10" height="10" fill="#4338CA"/>
+    <rect x="30" y="35" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="35" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="45" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="45" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="55" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="55" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="65" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="65" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="75" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="75" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="85" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="85" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="95" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="95" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="105" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="105" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="115" width="10" height="10" fill="#334155"/>
+    <rect x="140" y="115" width="10" height="10" fill="#334155"/>
+    <rect x="30" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="40" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="50" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="60" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="70" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="80" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="90" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="100" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="110" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="120" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="130" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="140" y="125" width="10" height="10" fill="#4338CA"/>
+    <rect x="40" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="50" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="60" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="70" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="80" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="90" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="100" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="110" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="120" y="115" width="10" height="10" fill="#312E81"/>
+    <rect x="130" y="115" width="10" height="10" fill="#312E81"/>
+    <rect class="sun" x="120" y="45" width="10" height="10" fill="#FDE68A"/>
+    <rect x="50" y="55" width="10" height="10" fill="#6366F1"/>
+    <rect x="60" y="55" width="10" height="10" fill="#6366F1"/>
+    <rect x="70" y="55" width="10" height="10" fill="#6366F1"/>
+    <rect x="50" y="65" width="10" height="10" fill="#6366F1"/>
+    <rect x="60" y="65" width="10" height="10" fill="#6366F1"/>
+    <rect x="70" y="65" width="10" height="10" fill="#6366F1"/>
+    <rect x="60" y="45" width="10" height="10" fill="#6366F1"/>
+    <rect x="60" y="75" width="10" height="10" fill="#312E81"/>
+    <rect x="60" y="85" width="10" height="10" fill="#312E81"/>
+    <rect x="60" y="95" width="10" height="10" fill="#312E81"/>
+    <rect x="60" y="105" width="10" height="10" fill="#312E81"/>
+    <rect class="walker" x="90" y="95" width="10" height="10" fill="#FDE68A"/>
+    <rect class="walker" x="90" y="105" width="10" height="10" fill="#6366F1"/>
+  </g>
+  <text x="200" y="106" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="96" font-weight="800" letter-spacing="-3" fill="#EDEDED">december</text>
+</svg>
